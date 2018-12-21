@@ -1,0 +1,124 @@
+<!doctype html>
+<head lang="en">
+  <title>Iframe - Voyager</title>
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+
+.checkout {
+  padding: 2rem;
+  background-color: white;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+}
+
+.checkout-body {
+  background-color: white;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+@media (min-width: 992px) {
+  .checkout-body {
+    margin: 0 auto;
+    width: 1200px;
+  }
+}
+
+.checkout-close {
+  display: none;
+  color: #ffffff;
+  text-decoration: none;
+  border: 2px solid transparent;
+  padding: 1px 2px;
+}
+
+.checkout-close:hover {
+  border: 2px solid rgba(255,255,255,0.75);
+}
+
+.checkout-header {
+  background-color: #e3e3e3;
+  padding: 2rem;
+  font-size: 24px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.checkout-content {
+  padding: 2rem;
+}
+
+.checkout-footer {
+  padding: 2rem;
+}
+
+.checkout--iframe {
+  background-color: rgba(0,0,0,0.70);
+}
+
+.checkout--iframe .checkout-close {
+  position: absolute;
+  top: -1.5rem;
+  right: 0;
+  display: block;
+}
+
+</style>
+</head>
+<body class="checkout js-checkout">
+
+  <div class="checkout-body js-checkout-body">
+    <a class="checkout-close js-checkout-close" href="#">Close</a>
+    <header class="checkout-header">
+      SUNSET – 6-Zipline Adventure Tour
+    </header>
+    <div class="checkout-content">
+
+      <form>
+        <input class="js-control" type="text" min="0" value="0" name="people">
+      </form>
+
+    </div>
+    <footer class="checkout-footer">Footer</footer>
+  </div>
+
+  <script>
+    var actions = {
+      PackageLoad: 'package.load',
+    };
+    var controlElement = document.querySelector('.js-control');
+    var domain = "http://localhost:8080";
+    var closeElement = document.querySelector('.js-checkout-close');
+
+    if (window.top !== window.self) {
+      var checkout = document.querySelector('.js-checkout');
+      checkout.classList.add('checkout--iframe');
+
+      var app = document.querySelector('.js-checkout-body');
+    }
+
+    window.addEventListener('message', function(event) {
+      var data = JSON.parse(event.data);
+      if (data.action === actions.PackageLoad) {
+        controlElement.value = data.arguments[0];
+      }
+
+    }, false);
+
+
+    closeElement.addEventListener('click', function(event) {
+      event.preventDefault();
+      var data = JSON.stringify({action: "iframe:close", arguments: "foobar"});
+      window.parent.postMessage(data, domain);
+    });
+
+  </script>
+
+</body>
+</html>
