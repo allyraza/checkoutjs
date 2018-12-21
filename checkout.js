@@ -107,6 +107,7 @@ CaptainPanel.Checkout = (function() {
    */
   var actions = {
     IframeClose: 'iframe.close',
+    PackageLoad: 'package.load',
   };
 
   /**
@@ -192,8 +193,9 @@ CaptainPanel.Checkout = (function() {
     var targetElement = event.target.closest(options.controlSelector);
     if (!!targetElement) {
       iframeElement.style.display = "block";
+
       var data = JSON.stringify({
-        action: 'package.load', 
+        action: actions.PackageLoad,
         arguments: [targetElement.dataset.id]
       });
       iframe.postMessage(data, domain);
