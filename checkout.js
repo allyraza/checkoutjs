@@ -74,14 +74,31 @@ CaptainPanel.Checkout = (function() {
    * Checkout panel default options.
    */
   var options = {
-    iframe: {
-      src: 'http://localhost:8080/iframe.html',
-      className: '.captainpanel-iframe',
+    iframeSrc: 'http://localhost:8080/iframe.html',
+    iframeClass: '.captainpanel-iframe',
+    iframeStyles: {
+      position: 'fixed',
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0,
+      zIndex: 9999,
+      width: '100%',
+      height: '100%',
+      border: 0,
+      display: 'none'
     },
-    control: {
-      selector: '.captainpanel-checkout',
-      className: 'captainpanel-button',
-      text: 'Book Now',
+    controlSelector: '.captainpanel-checkout',
+    controlClass: 'captainpanel-button',
+    controlText: 'Book Now',
+    controlStyles: {
+      backgroundColor: 'tomato',
+      color: '#ffffff',
+      fontSize: '2rem',
+      padding: '1rem 2rem',
+      border: '1px solid tomato',
+      borderRadius: '0.3rem',
+      cursor: 'pointer',
     }
   };
 
@@ -89,26 +106,13 @@ CaptainPanel.Checkout = (function() {
    * RPC Action list which can performed remotely on the api.
    */
   var actions = {
-    IframeClose: 'iframe:close',
+    IframeClose: 'iframe.close',
   };
 
   /**
    * Checkout control elements.
    */
   var controlElements =  null;
-
-  /**
-   * Checkout control styles.
-   */
-  var controlStyles = {
-    backgroundColor: 'tomato',
-    color: '#ffffff',
-    fontSize: '2rem',
-    padding: '1rem 2rem',
-    border: '1px solid tomato',
-    borderRadius: '0.3rem',
-    cursor: 'pointer',
-  };
 
   /**
    * Checkout panel iframe element.
@@ -119,22 +123,6 @@ CaptainPanel.Checkout = (function() {
    * Checkout panel iframe.
    */
   var iframe = null;
-
-  /**
-   * Checkout panel iframe styles.
-   */
-  var iframeStyles = {
-    position: 'fixed',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    zIndex: 9999,
-    width: '100%',
-    height: '100%',
-    border: 0,
-    display: 'none'
-  };
 
   /**
    * User site domain.
@@ -152,11 +140,11 @@ CaptainPanel.Checkout = (function() {
   function createControlElements() {
     controlElements.forEach(function(el, i) {
       var buttonElement = document.createElement('button');
-      buttonElement.classList.add(options.control.className);
+      buttonElement.classList.add(options.controlClass);
 
-      applyStyles(buttonElement, controlStyles);
+      applyStyles(buttonElement, options.controlStyles);
 
-      buttonElement.textContent = options.controls.text;
+      buttonElement.textContent = options.controlText;
       el.appendChild(buttonElement);
     });
   }
@@ -165,11 +153,11 @@ CaptainPanel.Checkout = (function() {
    * Create checkout panel iframe element.
    */
   function createIframeElement() {
-    document.createElement('iframe');
-    iframeElement.classList.add(options.iframe.className);
-    iframeElement.src = options.iframe.src;
+    iframeElement = document.createElement('iframe');
+    iframeElement.classList.add(options.iframeClass);
+    iframeElement.src = options.iframeSrc;
 
-    applyStyles(iframeElement, options.iframe.styles);
+    applyStyles(iframeElement, options.iframeStyles);
 
     containerElement.appendChild(iframeElement);
     iframe = iframeElement.contentWindow;
@@ -201,7 +189,7 @@ CaptainPanel.Checkout = (function() {
    * @param {object} event dom event.
    */
   function handleClick(event) {
-    var targetElement = event.target.closest(options.controls.selector);
+    var targetElement = event.target.closest(options.controlSelector);
     if (!!targetElement) {
       iframeElement.style.display = "block";
       var data = JSON.stringify({
@@ -220,6 +208,9 @@ CaptainPanel.Checkout = (function() {
     document.addEventListener('click', handleClick);
   }
 
+  /**
+   * Public method api.
+   */
   return {
     /**
      * Initialize checkout panel.
@@ -228,13 +219,10 @@ CaptainPanel.Checkout = (function() {
     init: function(opts) {
       options = Object.assign(options, opts);
 
-      controlElements = [].slice.call(document.querySelectorAll(options.controls.selector));
+      controlElements = [].slice.call(document.querySelectorAll(options.controlSelector));
       containerElement = document.querySelector('body');
 
-      /**
-      * @TODO: work out current domain.
-      */
-      domain = "http://localhost:8080";
+      domain = [window.location.protocol, window.location.host].join("//")
 
       createControlElements();
       createIframeElement();
@@ -245,9 +233,14 @@ CaptainPanel.Checkout = (function() {
      * Destroy checkout panel
      */
     destroy: function() {
+      iframeElement = null;
+      controlElements = null;
+      containerElement = null;
+      iframe = null;
+      domain = null;
     }
   };
 
 }());
 
-CaptainPanel.Checkout.init({});
+CaptainPanel.Checkout.init();

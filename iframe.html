@@ -91,7 +91,9 @@
   <script>
     var actions = {
       PackageLoad: 'package.load',
+      IframeClose: 'iframe.close',
     };
+
     var controlElement = document.querySelector('.js-control');
     var domain = "http://localhost:8080";
     var closeElement = document.querySelector('.js-checkout-close');
@@ -114,7 +116,7 @@
 
     closeElement.addEventListener('click', function(event) {
       event.preventDefault();
-      var data = JSON.stringify({action: "iframe:close", arguments: "foobar"});
+      var data = JSON.stringify({action: actions.IframeClose, arguments: "foobar"});
       window.parent.postMessage(data, domain);
     });
 
