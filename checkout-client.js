@@ -69,7 +69,7 @@ var Checkout = (function() {
   function sendCloseMessage() {
     var data = JSON.stringify({
       action: actions.IframeClose,
-      arguments: []
+      arguments: {},
     });
 
     origin.postMessage(data, options.domain);
@@ -98,7 +98,7 @@ var Checkout = (function() {
       }
 
       this.register(actions.PackageLoad, function(data) {
-        console.log("data: ", data);
+        window.location = ["boats", data.id].join("/");
       });
 
       registerEventListeners();

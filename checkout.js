@@ -74,7 +74,7 @@ CaptainPanel.Checkout = (function() {
    * Checkout default options.
    */
   var options = {
-    iframeSrc: 'http://external.captainpanel.com/en/mexico/cancun/catamaran-sagitario',
+    iframeSrc: 'http://external.captainpanel.com',
     iframeClass: '.captainpanel-iframe',
     iframeStyles: {
       position: 'fixed',
@@ -196,7 +196,7 @@ CaptainPanel.Checkout = (function() {
 
       var data = JSON.stringify({
         action: actions.PackageLoad,
-        arguments: [targetElement.dataset.id]
+        arguments: {id: targetElement.dataset.id},
       });
       iframe.postMessage(data, options.domain);
     }
