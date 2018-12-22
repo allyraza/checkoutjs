@@ -1,12 +1,48 @@
 <!doctype html>
 <head lang="en">
   <title>Voyager Example</title>
+
+  <style>
+
+    body {
+      margin: 0 auto;
+      width: calc(75%);
+      font-family: Georgia, serif;
+    }
+
+    .site-header {
+      padding: 2rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(0,0,0,0.20);
+      font-size: 2rem;
+    }
+
+    .site-main {
+      padding: 2rem;
+    }
+
+    .site-footer {
+      padding: 2rem;
+    }
+
+  </style>
+
 </head>
 <body>
 
-  <div class="captainpanel-checkout" data-id="zipline"></div>
-  <br>
-  <div class="captainpanel-checkout" data-id="voyager"></div>
+  <header class="site-header">
+    <h2 class="brand">Voyager</h3>
+  </header>
+
+  <main class="site-main">
+    <div class="captainpanel-checkout" data-id="zipline"></div>
+    <br>
+    <div class="captainpanel-checkout" data-id="voyager"></div>
+  </main>
+
+  <footer class="site-footer">
+    &copy; Copyright 2018. CaptainPanel
+  </footer>
 
   <script type="text/javascript">
     (function() {var s=document.createElement("script");

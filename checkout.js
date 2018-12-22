@@ -74,7 +74,7 @@ CaptainPanel.Checkout = (function() {
    * Checkout default options.
    */
   var options = {
-    iframeSrc: 'http://localhost:8080/iframe.html',
+    iframeSrc: 'http://external.captainpanel.com/en/mexico/cancun/catamaran-sagitario',
     iframeClass: '.captainpanel-iframe',
     iframeStyles: {
       position: 'fixed',
@@ -99,7 +99,8 @@ CaptainPanel.Checkout = (function() {
       border: '1px solid tomato',
       borderRadius: '0.3rem',
       cursor: 'pointer',
-    }
+    },
+    domain: "http://external.captainpanel.com"
   };
 
   /**
@@ -124,11 +125,6 @@ CaptainPanel.Checkout = (function() {
    * Checkout iframe.
    */
   var iframe = null;
-
-  /**
-   * User site domain.
-   */
-  var domain = null;
 
   /**
    * Checkout container element.
@@ -178,9 +174,13 @@ CaptainPanel.Checkout = (function() {
    * @param {object} event custom action event.
    */
   function handlePostMessage(event) {
-    var data = JSON.parse(event.data);
-    if (data.action === actions.IframeClose) {
-      iframeElement.style.display = "none";
+    try {
+      var data = JSON.parse(event.data);
+      if (data.action === actions.IframeClose) {
+        iframeElement.style.display = "none";
+      }
+    } catch(e) {
+      console.log(e);
     }
   }
 
@@ -198,7 +198,7 @@ CaptainPanel.Checkout = (function() {
         action: actions.PackageLoad,
         arguments: [targetElement.dataset.id]
       });
-      iframe.postMessage(data, domain);
+      iframe.postMessage(data, options.domain);
     }
   }
 
@@ -224,8 +224,6 @@ CaptainPanel.Checkout = (function() {
       controlElements = [].slice.call(document.querySelectorAll(options.controlSelector));
       containerElement = document.querySelector('body');
 
-      domain = [window.location.protocol, window.location.host].join("//")
-
       createControlElements();
       createIframeElement();
       registerEventListeners();
@@ -239,7 +237,6 @@ CaptainPanel.Checkout = (function() {
       controlElements = null;
       containerElement = null;
       iframe = null;
-      domain = null;
     }
   };
 
