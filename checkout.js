@@ -71,7 +71,7 @@ var CaptainPanel = CaptainPanel || {};
 CaptainPanel.Checkout = (function() {
 
   /**
-   * Checkout panel default options.
+   * Checkout default options.
    */
   var options = {
     iframeSrc: 'http://localhost:8080/iframe.html',
@@ -103,7 +103,7 @@ CaptainPanel.Checkout = (function() {
   };
 
   /**
-   * RPC Action list which can performed remotely on the api.
+   * Rpc action list.
    */
   var actions = {
     IframeClose: 'iframe.close',
@@ -116,12 +116,12 @@ CaptainPanel.Checkout = (function() {
   var controlElements =  null;
 
   /**
-   * Checkout panel iframe element.
+   * Checkout iframe element.
    */
   var iframeElement =  null;
 
   /**
-   * Checkout panel iframe.
+   * Checkout iframe.
    */
   var iframe = null;
 
@@ -136,7 +136,7 @@ CaptainPanel.Checkout = (function() {
   var containerElement = null;
 
   /**
-   * Create checkout panel control buttons using default styles.
+   * Create checkout control elements with default styles.
    */
   function createControlElements() {
     controlElements.forEach(function(el, i) {
@@ -151,7 +151,7 @@ CaptainPanel.Checkout = (function() {
   }
 
   /**
-   * Create checkout panel iframe element.
+   * Create checkout iframe element.
    */
   function createIframeElement() {
     iframeElement = document.createElement('iframe');
@@ -165,7 +165,7 @@ CaptainPanel.Checkout = (function() {
   }
 
   /**
-   * Apply styles to an element.
+   * Apply styles to element.
    */
   function applyStyles(element, styles) {
       for (var prop in styles) {
@@ -185,7 +185,7 @@ CaptainPanel.Checkout = (function() {
   }
 
   /**
-   * Handle click on checkout panel controls, it registers only one event on
+   * Handle click on checkout controls, it registers only one event on
    * document and delegate down to individual target elements for better performance.
    * @param {object} event dom event.
    */
@@ -203,7 +203,7 @@ CaptainPanel.Checkout = (function() {
   }
 
   /**
-   * Register events for checkout panel.
+   * Register events for checkout.
    */
   function registerEventListeners() {
     window.addEventListener('message', handlePostMessage);
@@ -215,8 +215,8 @@ CaptainPanel.Checkout = (function() {
    */
   return {
     /**
-     * Initialize checkout panel.
-     * @param {object} opts checkout panel options.
+     * Initialize checkout.
+     * @param {object} opts checkouti options.
      */
     init: function(opts) {
       options = Object.assign(options, opts);
@@ -232,7 +232,7 @@ CaptainPanel.Checkout = (function() {
     },
 
     /**
-     * Destroy checkout panel
+     * Destroy checkout.
      */
     destroy: function() {
       iframeElement = null;
