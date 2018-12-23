@@ -92,13 +92,32 @@ CaptainPanel.Checkout = (function() {
     controlClass: 'captainpanel-button',
     controlText: 'Book Now',
     controlStyles: {
-      backgroundColor: 'tomato',
+      backgroundColor: '#f1696a',
       color: '#ffffff',
-      fontSize: '2rem',
-      padding: '1rem 2rem',
+      fontSize: '1rem',
+      padding: '0.7rem 1rem',
       border: '1px solid tomato',
-      borderRadius: '0.3rem',
+      borderRadius: '0.2rem',
       cursor: 'pointer',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      position: 'relative',
+    },
+    iconText: '✔',
+    iconStyles: {
+      fontFamily: '"Times", "Times New Roman", "serif", "sans-serif", "EmojiSymbols"',
+      fontSize: '18px',
+      fontWeight: 500,
+      backgroundColor: 'rgba(0,0,0,0.2)',
+      borderRadius: '100%',
+      textAlign: 'center',
+      width: '24px',
+      height: '24px',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginRight: '0.5rem',
     },
     domain: "http://external.captainpanel.com"
   };
@@ -138,10 +157,21 @@ CaptainPanel.Checkout = (function() {
     controlElements.forEach(function(el, i) {
       var buttonElement = document.createElement('button');
       buttonElement.classList.add(options.controlClass);
-
       applyStyles(buttonElement, options.controlStyles);
 
-      buttonElement.textContent = options.controlText;
+
+      var labelElement = document.createElement('span');
+      labelElement.classList.add(options.controlClass + '-label');
+      applyStyles(labelElement, options.labelStyles);
+      labelElement.textContent = options.controlText;
+
+      var spanElement = document.createElement('span');
+      spanElement.classList.add(options.controlClass + '-icon');
+      applyStyles(spanElement, options.iconStyles);
+      spanElement.textContent = options.iconText;
+
+      buttonElement.appendChild(spanElement);
+      buttonElement.appendChild(labelElement);
       el.appendChild(buttonElement);
     });
   }
