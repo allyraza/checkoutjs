@@ -1,0 +1,26 @@
+{
+  "name": "checkoutjs",
+  "version": "1.0.0",
+  "description": "Captain panel chechkout.",
+  "main": "checkout.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "browser-sync start --server --files './*'",
+    "dev": "mkdir dist && concat -o ./dist/checkout.js ./checkout.js ./config.dev.js",
+    "prod": "mkdir dist && concat -o ./dist/checkout.js ./checkout.js ./config.prod.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allyraza/checkoutjs.git"
+  },
+  "author": "",
+  "license": "proprietary",
+  "bugs": {
+    "url": "https://github.com/allyraza/checkoutjs/issues"
+  },
+  "homepage": "https://github.com/allyraza/checkoutjs#readme",
+  "devDependencies": {
+    "browser-sync": "^2.26.3",
+    "concat": "^1.0.3"
+  }
+}

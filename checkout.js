@@ -271,5 +271,3 @@ CaptainPanel.Checkout = (function() {
   };
 
 }());
-
-CaptainPanel.Checkout.init();
